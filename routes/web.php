@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,5 @@ use App\Http\Controllers\AdminController;
 Auth::routes();
 
 Route::get('/', [AdminController::class, 'index'])->name('admin');
+
+Route::resource('/employees', UserController::class);

@@ -208,9 +208,9 @@ return [
     |
     */
 
-    'enabled_laravel_mix' => true,
-    'laravel_mix_css_path' => 'css/app.css',
-    'laravel_mix_js_path' => 'js/app.js',
+    'enabled_laravel_mix' => false,
+    'laravel_mix_css_path' => 'public/css/app.css',
+    'laravel_mix_js_path' => 'public/js/app.js',
 
     /*
     |--------------------------------------------------------------------------
@@ -245,6 +245,11 @@ return [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
+        ],
+        [
+            'text'        => 'employees',
+            'url'         => 'employees',
+            'icon'        => 'far fa-fw fa-file',
         ],
         [
             'text'        => 'pages',
