@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Position;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -46,6 +47,17 @@ class User extends Authenticatable
     public function position()
     {
         return $this->belongsTo(Position::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public static function withRole($role)
+    {
+        $findedRole = Role::where('slug', $role)->first();
+        return $findedRole->users;
     }
 
     public function scopeEmployees($query)
