@@ -20,7 +20,7 @@ class PositionSeeder extends Seeder
             'Frontend developer',
             'Lead designer',
             'Contextual advertising specialist',
-            'Leading specialist of COntrol Department'
+            'Leading specialist of Control Department'
         ];
         foreach ($positions as $name) {
             $adminId = User::withRole('admin')->random()->id;
