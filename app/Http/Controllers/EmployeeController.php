@@ -39,6 +39,7 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
+        dd($request->all());
         $validatedRequest = $request->validated();
         return redirect()->route('employees.index')->with('alert-success', 'Employee has been successfuly created');;
     }

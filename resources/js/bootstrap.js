@@ -8,8 +8,6 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('./plugins/jquery.maskedinput');
-    // require('jquery-mask-plugin');
-    // $('.rupiah').mask('0,000,000,000', {reverse: true});
 
 } catch (error) {
     console.log(error);

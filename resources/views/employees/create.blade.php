@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <form action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
+                            <form id="create-employee" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                                 <img id="avatar" src="#" alt="your avatar" style="max-height: 300px; max-width: 300px"/>
                                 <x-adminlte-input-file id="image" name="image" label="Photo"
@@ -43,7 +43,7 @@
                                     </x-slot>
                                 </x-adminlte-input>
                                 <x-adminlte-input id="phone" name="phone" label="Phone" placeholder="Enter phone of employee"
-                                    type="tel" error-key="phone" value="{{ old('phone') ?? '+380'}}">
+                                    type="tel" error-key="phone" value="{{ old('phone') }}">
                                     <x-slot name="bottomSlot">
                                         @error('phone')
                                             <span class="invalid-feedback">
@@ -56,8 +56,8 @@
                                         @enderror
                                     </x-slot>
                                 </x-adminlte-input>
-                                <button type="submit" class="btn btn-primary">Створити</button>
-                                <a href="{{ route('employees.index') }}" class="btn btn-default">Відміна</a>
+                                <button type="submit" class="btn btn-primary">Create</button>
+                                <a href="{{ route('employees.index') }}" class="btn btn-default">Back</a>
                             </form>
                         </div>
                     </div>
@@ -76,14 +76,21 @@
                 avatar.src = URL.createObjectURL(file);
             }
         }
+
         var name = document.getElementById('name');
         name.oninput = function() {
             document.getElementById('simbol-count').innerHTML = name.value.length+'/256';
         };
+
         jQuery(function($){
-            $.mask.definitions['~']='[+380]';
-            $('input[type=tel]').mask('~ (99) 999 99 99', {placeholder:" "}, {autoclear: false});
+            $('#phone').mask('+380 (99) 999 99 99', {placeholder:" "}, {autoclear: false});
         });
+
+        // $("#create-employee").submit(function(event) {
+        //     event.preventDefault();
+        //     $("#phone").unmask();//doesnt work yet
+        //     this.submit();
+        // });
     });
 </script>
 @endpush
