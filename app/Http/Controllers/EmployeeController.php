@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreEmployeeRequest;
 
 
 class EmployeeController extends Controller
@@ -27,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return back();
+        return view('employees.create');
     }
 
     /**
@@ -36,9 +37,10 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        //
+        $validatedRequest = $request->validated();
+        return redirect()->route('employees.index')->with('alert-success', 'Employee has been successfuly created');;
     }
 
     /**

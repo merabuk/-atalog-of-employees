@@ -1,14 +1,19 @@
 window._ = require('lodash');
 
 try {
+    require('overlayscrollbars');
     require('bootstrap');
-} catch (e) {}
+    require('../../vendor/almasaeed2010/adminlte/dist/js/adminlte');
 
-window.$ = window.jQuery = require('jquery');
+    window.$ = window.jQuery = require('jquery');
 
-require('overlayscrollbars');
-require('bootstrap');
-require('../../vendor/almasaeed2010/adminlte/dist/js/adminlte');
+    require('./plugins/jquery.maskedinput');
+    // require('jquery-mask-plugin');
+    // $('.rupiah').mask('0,000,000,000', {reverse: true});
+
+} catch (error) {
+    console.log(error);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
