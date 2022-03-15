@@ -69,30 +69,20 @@
 
 @push('js')
 <script>
-    jQuery(function($) {
-        $(document).ready(function($) {
-            image.onchange = evt => {
-                const [file] = image.files;
-                if (file) {
-                    avatar.src = URL.createObjectURL(file);
-                }
+    $(document).ready(function($) {
+        image.onchange = evt => {
+            const [file] = image.files;
+            if (file) {
+                avatar.src = URL.createObjectURL(file);
             }
-            var name = document.getElementById('name');
-            name.oninput = function() {
-                document.getElementById('simbol-count').innerHTML = name.value.length+'/256';
-            };
-            // jQuery(function($){
-            //     // $.mask.definitions['~']='[+]';
-            //     $('input[type=tel]').mask('9 (99) 999 99 99', {placeholder:" "}, {autoclear: false});
-            // });
-
-                $('#phone').mask('?999 (99) 999 99 99');
-
-            // $('#upload-image').on('click', (e) => {
-            //     e.preventDefault();
-            //     var image = $('#image')[0].files;
-            //     console.log(image);
-            // });
+        }
+        var name = document.getElementById('name');
+        name.oninput = function() {
+            document.getElementById('simbol-count').innerHTML = name.value.length+'/256';
+        };
+        jQuery(function($){
+            $.mask.definitions['~']='[+380]';
+            $('input[type=tel]').mask('~ (99) 999 99 99', {placeholder:" "}, {autoclear: false});
         });
     });
 </script>
