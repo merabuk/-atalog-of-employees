@@ -25,15 +25,14 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:256',
-            // 'patronymic' => 'nullable|min:3|max:100',
-            // 'email' => 'required|email|unique:users,email',
+            'phone' => ['required', 'regex:/\+380[0-9]{9}/'],
+            'date_of_employment' => 'required|date',
+            'email' => 'required|email|unique:users,email',
+            'position_id' => 'required',
+            'salary' => 'required|min:0|max:500',
+
             // 'password' => 'required|min:8|max:50',
             // 'confirm' => 'required_with:password|same:password',
-            // 'role' => 'required',
-            // 'manager_id' => 'nullable',
-            // 'phone' => ['required', 'regex:/\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}|\(_{3}\)\s_{3}-_{2}-_{2}/'],
-            // 'city' => 'nullable|max:50',
-            // 'address' => 'nullable|max:100',
         ];
     }
 }

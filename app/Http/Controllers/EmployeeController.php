@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeeRequest;
 
@@ -28,7 +29,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        $users = User::employees()->get();
+        $positions = Position::all();
+        return view('employees.create', compact('users', 'positions'));
     }
 
     /**

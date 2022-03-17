@@ -9,6 +9,8 @@
 @stop
 
 @section('plugins.BsCustomFileInput', true)
+@section('plugins.Select2', true)
+@section('plugins.TempusDominusBs4', true)
 
 @section('content')
     <div class="row justify-content-center">
@@ -19,6 +21,7 @@
                         <div class="col-12">
                             <form id="create-employee" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                                {{-- Photo --}}
                                 <img id="avatar" src="#" alt="your avatar" style="max-height: 300px; max-width: 300px"/>
                                 <x-adminlte-input-file id="image" name="image" label="Photo"
                                     placeholder="Choose a file..." legend="Browse">
@@ -28,6 +31,7 @@
                                         </span>
                                     </x-slot>
                                 </x-adminlte-input-file>
+                                {{-- Name --}}
                                 <x-adminlte-input id="name" name="name" label="Name" placeholder="Enter name of employee"
                                     min="2" max="256" error-key="name" value="{{ old('name') }}">
                                     <x-slot name="bottomSlot">
@@ -42,6 +46,7 @@
                                         @enderror
                                     </x-slot>
                                 </x-adminlte-input>
+                                {{-- Phone --}}
                                 <x-adminlte-input id="phone" name="phone" label="Phone" placeholder="Enter phone of employee"
                                     type="tel" error-key="phone" value="{{ old('phone') }}">
                                     <x-slot name="bottomSlot">
@@ -56,6 +61,80 @@
                                         @enderror
                                     </x-slot>
                                 </x-adminlte-input>
+                                {{-- Email --}}
+                                <x-adminlte-input id="email" name="email" label="Email" placeholder="Enter email of employee"
+                                    error-key="email" value="{{ old('email') }}">
+                                    <x-slot name="bottomSlot">
+                                        @error('email')
+                                            <span class="invalid-feedback">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </x-slot>
+                                </x-adminlte-input>
+                                {{-- Position --}}
+                                <x-adminlte-select2 name="position_id" label="Position" data-placeholder="Select position..."
+                                    error-key="position_id">
+                                    <x-slot name="prependSlot">
+                                        <div class="input-group-text bg-dark">
+                                            <i class="fa-solid fa-briefcase"></i>
+                                        </div>
+                                    </x-slot>
+                                    <option/>
+                                    @forelse ($positions as $position)
+                                        <option @if (old('position_id')==$position->id) selected @endif
+                                            value="{{ $position->id }}" >{{ $position->name }}</option>
+                                    @empty
+                                        <option disabled>No positions available</option>
+                                    @endforelse
+                                </x-adminlte-select2>
+                                {{-- Salary --}}
+                                <x-adminlte-input id="salary" name="salary" label="Salary, $" placeholder="Enter salary of employee"
+                                    min="0" max="500" error-key="salary" value="{{ old('salary') }}" type="number" step="0.001">
+                                    <x-slot name="bottomSlot">
+                                        @error('salary')
+                                            <span class="invalid-feedback">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </x-slot>
+                                </x-adminlte-input>
+                                {{-- Head --}}
+                                <x-adminlte-select2 name="head_id" label="Head" data-placeholder="Select head an employee..."
+                                    error-key="head_id">
+                                    <x-slot name="prependSlot">
+                                        <div class="input-group-text bg-dark">
+                                            <i class="fa-solid fa-user-tie"></i>
+                                        </div>
+                                    </x-slot>
+                                    <option/>
+                                    @forelse ($users as $user)
+                                        <option @if (old('head_id')==$user->id) selected @endif
+                                            value="{{ $user->id }}" >{{ $user->name }}</option>
+                                    @empty
+                                        <option disabled>No heads available</option>
+                                    @endforelse
+                                </x-adminlte-select2>
+                                {{-- Date of employment --}}
+                                @php
+                                $dateOfemployeeConfig = [
+                                    'format' => 'DD.MM.YYYY',
+                                    'dayViewHeaderFormat' => 'MMM YYYY',
+                                    'minDate' => "js:moment().startOf('month')",
+                                    'maxDate' => "js:moment().endOf('month')",
+                                    'daysOfWeekDisabled' => [0, 6],
+                                ];
+                                @endphp
+                                <x-adminlte-input-date name="date_of_employment" label="Date of employee"
+                                    :config="$dateOfemployeeConfig" placeholder="Choose a day..."
+                                    value="{{ old('date_of_employment') }}">
+                                    <x-slot name="appendSlot">
+                                        <div class="input-group-text bg-dark">
+                                            <i class="fas fa-calendar-day"></i>
+                                        </div>
+                                    </x-slot>
+                                </x-adminlte-input-date>
+
                                 <button type="submit" class="btn btn-primary">Create</button>
                                 <a href="{{ route('employees.index') }}" class="btn btn-default">Back</a>
                             </form>
@@ -86,11 +165,11 @@
             $('#phone').mask('+380 (99) 999 99 99', {placeholder:" "}, {autoclear: false});
         });
 
-        // $("#create-employee").submit(function(event) {
-        //     event.preventDefault();
-        //     $("#phone").unmask();//doesnt work yet
-        //     this.submit();
-        // });
+        $("#create-employee").submit(function(event) {
+            event.preventDefault();
+            $("#phone").val($("#phone").val().replace(/\(|\)|\s/g, ''));
+            this.submit();
+        });
     });
 </script>
 @endpush
