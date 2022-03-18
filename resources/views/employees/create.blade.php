@@ -195,7 +195,7 @@
                 //     return response.data;
                 // })
                 // .catch(function (error) {
-                //     return error;
+                //     console.log(error);
                 // });
                 $.ajax({
                     url: "{{ route('employee.create.get-head') }}",
@@ -205,9 +205,8 @@
                         _token: CSRF_TOKEN,
                         head: request.term
                     },
-                    success: function( data ) {
-                        console.log(data);
-                        response( data );
+                    success: function(data) {
+                        response(data);
                     }
                 });
             },
