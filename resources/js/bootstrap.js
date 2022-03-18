@@ -4,6 +4,8 @@ try {
     // window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
+    require('jquery-ui/ui/widgets/autocomplete');
+
     require('overlayscrollbars');
     require('../../vendor/almasaeed2010/adminlte/dist/js/adminlte');
 

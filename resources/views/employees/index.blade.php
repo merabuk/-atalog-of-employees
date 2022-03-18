@@ -38,7 +38,7 @@
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </a>';
                 $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete"
-                                data-toggle="modal" data-target="#deleteEmployee'.$user->id.'" type="button">
+                                data-bs-toggle="modal" data-bs-target="#deleteEmployee'.$user->id.'" type="button">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>
                             <div class="modal fade" id="deleteEmployee'.$user->id.'" tabindex="-1" aria-labelledby="deleteEmployee'.$user->id.'Label"
@@ -47,7 +47,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="deleteEmployee'.$user->id.'Label">Remove employee</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -55,7 +55,7 @@
                                             Are you sure you want to remove employee '.$user->name.'?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                             <a class="btn btn-primary" href="'.$routeDelete.'">Remove</a>
                                         </div>
                                     </div>

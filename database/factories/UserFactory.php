@@ -25,7 +25,6 @@ class UserFactory extends Factory
         $slug = Str::slug($fullName);
         $email = $slug.'@gmail.com';
         $positionId = Position::get()->random()->id;
-        $headId = (count(User::withRole('employee')) > 0) ? User::withRole('employee')->random()->id : null;
         $adminId = User::withRole('admin')->random()->id;
         $employeeRoleId = Role::roleIdFor('employee')->id;
         return [
@@ -38,7 +37,7 @@ class UserFactory extends Factory
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'salary' => $this->faker->randomFloat(3, 0, 500),
-            'head_id' => $headId,
+            'head_id' => null,
             'admin_created_id' => $adminId,
             'admin_updated_id' => $adminId,
             'role_id' => $employeeRoleId,

@@ -100,7 +100,18 @@
                                     </x-slot>
                                 </x-adminlte-input>
                                 {{-- Head --}}
-                                <x-adminlte-select2 name="head_id" label="Head" data-placeholder="Select head an employee..."
+                                <x-adminlte-input id="head" name="head" label="Head" placeholder="Enter head name of employee"
+                                    error-key="head" value="{{ old('head') }}">
+                                    <x-slot name="bottomSlot">
+                                        @error('head')
+                                            <span class="invalid-feedback">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </x-slot>
+                                </x-adminlte-input>
+                                <input type="hidden" id='head-id' name="head-id" readonly>
+                                {{-- <x-adminlte-select2 name="head_id" label="Head" data-placeholder="Select head an employee..."
                                     error-key="head_id">
                                     <x-slot name="prependSlot">
                                         <div class="input-group-text bg-dark">
@@ -114,7 +125,7 @@
                                     @empty
                                         <option disabled>No heads available</option>
                                     @endforelse
-                                </x-adminlte-select2>
+                                </x-adminlte-select2> --}}
                                 {{-- Date of employment --}}
                                 @php
                                 $dateOfemployeeConfig = [
@@ -169,6 +180,43 @@
             event.preventDefault();
             $("#phone").val($("#phone").val().replace(/\(|\)|\s/g, ''));
             this.submit();
+        });
+
+        var route = "{{ route('employee.create.get-head') }}";
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $("#head").autocomplete({
+            source: function( request, response ) {
+                // Fetch data
+                // axios.post(route, {
+                //     'head': request.term,
+                // })
+                // .then(function (response) {
+                //     console.log(response.data);
+                //     return response.data;
+                // })
+                // .catch(function (error) {
+                //     return error;
+                // });
+                $.ajax({
+                    url: "{{ route('employee.create.get-head') }}",
+                    type: 'post',
+                    dataType: "json",
+                    data: {
+                        _token: CSRF_TOKEN,
+                        head: request.term
+                    },
+                    success: function( data ) {
+                        console.log(data);
+                        response( data );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                // Set selection
+                $('#head').val(ui.item.label); // display the selected text
+                $('#head-id').val(ui.item.value); // save selected id to input
+                return false;
+            }
         });
     });
 </script>

@@ -18,7 +18,6 @@ class EmployeeController extends Controller
     public function index()
     {
         $users = User::employees()->with('position')->get();
-        // dd($users);
         return view('employees.index', compact('users'));
     }
 
@@ -29,10 +28,15 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $users = User::employees()->get();
-        $positions = Position::all();
-        return view('employees.create', compact('users', 'positions'));
+        //
     }
+
+    // public function autocompleteHead(Request $request)
+    // {
+    //     $query = $request->get('query');
+    //     $filterResult = User::employees()->where('name', 'LIKE', '%'. $query. '%')->get();
+    //     return response()->json($filterResult);
+    // }
 
     /**
      * Store a newly created resource in storage.

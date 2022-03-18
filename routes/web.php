@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeCreateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,6 @@ Auth::routes();
 
 Route::get('/', [AdminController::class, 'index'])->name('admin');
 
-Route::resource('/employees', EmployeeController::class);
+Route::resource('/employees', EmployeeController::class)->except(['create', 'show']);
+Route::get('/employees/create', [EmployeeCreateController::class, 'create'])->name('employee.create');
+Route::post('/employees/create/get-head', [EmployeeCreateController::class, 'getHead'])->name('employee.create.get-head');
