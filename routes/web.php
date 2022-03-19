@@ -26,5 +26,5 @@ Auth::routes();
 Route::get('/', [AdminController::class, 'index'])->name('admin');
 
 Route::resource('/employees', EmployeeController::class)->except(['create', 'show']);
-Route::get('/employees/create', [EmployeeCreateController::class, 'create'])->name('employee.create');
-Route::post('/employees/create/get-head', [EmployeeCreateController::class, 'getHead'])->name('employee.create.get-head');
+Route::get('/employees/create', [EmployeeCreateController::class, 'create'])->name('employees.create');
+Route::post('/employees/create/get-head', [EmployeeCreateController::class, 'getHead'])->name('employees.create.get-head');

@@ -182,7 +182,7 @@
             this.submit();
         });
 
-        var route = "{{ route('employee.create.get-head') }}";
+        var route = "{{ route('employees.create.get-head') }}";
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("#head").autocomplete({
             source: function( request, response ) {
@@ -198,7 +198,7 @@
                 //     console.log(error);
                 // });
                 $.ajax({
-                    url: "{{ route('employee.create.get-head') }}",
+                    url: route,
                     type: 'post',
                     dataType: "json",
                     data: {
