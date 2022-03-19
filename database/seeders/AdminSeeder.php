@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\ImageModel;
+use Image;
 
 class AdminSeeder extends Seeder
 {
@@ -19,6 +21,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $adminRoleId = Role::getRoleIdBySlug('admin')->id;
+        $storagePath = public_path('storage/');
         for ($i=1; $i < 4; $i++) {
             $admin = new User();
             $admin->name = 'Admin'.$i;
@@ -35,6 +38,16 @@ class AdminSeeder extends Seeder
             $admin->admin_updated_id = $i;
             $admin->role_id = $adminRoleId;
             $admin->save();
+            $imageName = Str::random(40);
+            $imagePath = 'images/'.$imageName.'.jpg';
+            $fullPath = $storagePath.$imagePath;
+            Image::make(public_path('images/cosmocat.jpg'))
+                    ->fit(300)
+                    ->save($fullPath, 80);
+            $image = new ImageModel();
+            $image->path = $imagePath;
+            $image->user_id = $admin->id;
+            $image->save();
         }
     }
 }

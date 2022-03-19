@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// use Intervention\Image\Facades\Image;
+use Image;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('web');
     }
 
     /**
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // dd(public_path('storage/'));
+        $avatar = Image::make('https://klike.net/uploads/posts/2019-03/1551511816_38.jpg')->fit(300);
+        // sdd($avatar);
+        return $avatar->response('jpg');
+        // return view('home', compact('avatar'));
     }
 }

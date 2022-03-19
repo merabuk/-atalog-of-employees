@@ -8,6 +8,8 @@ use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\ImageModel;
+use Image;
 
 class UserFactory extends Factory
 {
@@ -42,6 +44,30 @@ class UserFactory extends Factory
             'admin_updated_id' => $adminId,
             'role_id' => $employeeRoleId,
         ];
+    }
+
+    public function configure()
+    {
+        $storagePath = public_path('storage/');
+        return $this->afterCreating(function (User $user) use ($storagePath) {
+            $headId = User::getUsersByRoleSlug('employee')
+                ->where('position_id', '>=', $user->position_id)
+                ->whereNotIn('id', $user->id)->random()->id;
+            $user->head_id = $headId;
+            $user->save();
+
+            $number = $this->faker->numberBetween(1, 6);
+            $imageName = Str::random(40);
+            $imagePath = 'images/'.$imageName.'.jpg';
+            $fullPath = $storagePath.$imagePath;
+            Image::make(public_path('images/avatar'.$number.'.jpg'))
+                    ->fit(300)
+                    ->save($fullPath, 80);
+            $image = new ImageModel();
+            $image->path = $imagePath;
+            $image->user_id = $user->id;
+            $image->save();
+        });
     }
 
     /**

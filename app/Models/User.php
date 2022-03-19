@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Position;
 use App\Models\Role;
+use App\Models\ImageModel;
 
 class User extends Authenticatable
 {
@@ -52,6 +53,11 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function image()
+    {
+        return $this->hasOne(ImageModel::class);
     }
 
     public static function getUsersByRoleSlug($role)

@@ -31,13 +31,6 @@ class EmployeeController extends Controller
         //
     }
 
-    // public function autocompleteHead(Request $request)
-    // {
-    //     $query = $request->get('query');
-    //     $filterResult = User::employees()->where('name', 'LIKE', '%'. $query. '%')->get();
-    //     return response()->json($filterResult);
-    // }
-
     /**
      * Store a newly created resource in storage.
      *

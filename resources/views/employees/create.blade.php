@@ -20,11 +20,11 @@
                     <div class="row">
                         <div class="col-12">
                             <form id="create-employee" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
+                                @csrf
                                 {{-- Photo --}}
                                 <img id="avatar" src="#" alt="your avatar" style="max-height: 300px; max-width: 300px"/>
                                 <x-adminlte-input-file id="image" name="image" label="Photo"
-                                    placeholder="Choose a file..." legend="Browse">
+                                    placeholder="Choose a file..." legend="Browse" value="{{ old('image') }}">
                                     <x-slot name="bottomSlot">
                                         <span class="text-sm text-gray">
                                             File format jpg, png up to 5MB, the minimum size of 300x300px
@@ -80,7 +80,7 @@
                                             <i class="fa-solid fa-briefcase"></i>
                                         </div>
                                     </x-slot>
-                                    <option/>
+                                    <option></option>
                                     @forelse ($positions as $position)
                                         <option @if (old('position_id')==$position->id) selected @endif
                                             value="{{ $position->id }}" >{{ $position->name }}</option>
@@ -110,7 +110,7 @@
                                         @enderror
                                     </x-slot>
                                 </x-adminlte-input>
-                                <input type="hidden" id='head-id' name="head-id" readonly>
+                                <input type="hidden" id='head_id' name="head_id" value="{{ old('head_id') }}">
                                 {{-- <x-adminlte-select2 name="head_id" label="Head" data-placeholder="Select head an employee..."
                                     error-key="head_id">
                                     <x-slot name="prependSlot">
@@ -209,15 +209,14 @@
                         position_id: positionId,
                     },
                     success: function(data) {
-                        console.log(data);
-                        // response(data);
+                        response(data);
                     }
                 });
             },
             select: function (event, ui) {
                 // Set selection
                 $('#head').val(ui.item.label); // display the selected text
-                $('#head-id').val(ui.item.value); // save selected id to input
+                $('#head_id').val(ui.item.value); // save selected id to input
                 return false;
             }
         });

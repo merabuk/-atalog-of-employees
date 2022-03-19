@@ -15,6 +15,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    <img src="{{ asset('images/cosmocat.jpg') }}">
                 </div>
             </div>
         </div>

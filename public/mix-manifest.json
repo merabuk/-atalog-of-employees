@@ -1,4 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/images/avatar1.jpg": "/images/avatar1.jpg",
+    "/images/avatar2.jpg": "/images/avatar2.jpg",
+    "/images/avatar3.jpg": "/images/avatar3.jpg",
+    "/images/avatar4.jpg": "/images/avatar4.jpg",
+    "/images/avatar5.jpg": "/images/avatar5.jpg",
+    "/images/avatar6.jpg": "/images/avatar6.jpg",
+    "/images/cosmocat.jpg": "/images/cosmocat.jpg"
 }

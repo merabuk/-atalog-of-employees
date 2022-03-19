@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+use App\Models\ImageModel;
+use Image;
 
 class EmployeeSeeder extends Seeder
 {
@@ -15,12 +18,6 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(100)->create()->each(function ($employee) {
-            $headId = User::getUsersByRoleSlug('employee')
-                ->where('position_id', '>=', $employee->position_id)
-                ->whereNotIn('id', $employee->id)->random()->id;
-            $employee->head_id = $headId;
-            $employee->save();
-        });
+        User::factory(100)->create();
     }
 }
