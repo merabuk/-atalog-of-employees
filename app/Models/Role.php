@@ -15,7 +15,7 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
-    public static function roleIdFor($role)
+    public static function getRoleIdBySlug($role)
     {
         return self::where('slug', $role)->first();
     }

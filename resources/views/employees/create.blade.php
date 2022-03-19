@@ -74,7 +74,7 @@
                                 </x-adminlte-input>
                                 {{-- Position --}}
                                 <x-adminlte-select2 name="position_id" label="Position" data-placeholder="Select position..."
-                                    error-key="position_id">
+                                    error-key="position_id" id="position_id">
                                     <x-slot name="prependSlot">
                                         <div class="input-group-text bg-dark">
                                             <i class="fa-solid fa-briefcase"></i>
@@ -146,7 +146,7 @@
                                     </x-slot>
                                 </x-adminlte-input-date>
 
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                                 <a href="{{ route('employees.index') }}" class="btn btn-default">Back</a>
                             </form>
                         </div>
@@ -186,6 +186,8 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("#head").autocomplete({
             source: function( request, response ) {
+                var selectedPosition = $('#select2-position_id-container').html();
+                var positionId = $('#position_id option:contains('+selectedPosition+')').val();
                 // Fetch data
                 // axios.post(route, {
                 //     'head': request.term,
@@ -203,10 +205,12 @@
                     dataType: "json",
                     data: {
                         _token: CSRF_TOKEN,
-                        head: request.term
+                        head: request.term,
+                        position_id: positionId,
                     },
                     success: function(data) {
-                        response(data);
+                        console.log(data);
+                        // response(data);
                     }
                 });
             },

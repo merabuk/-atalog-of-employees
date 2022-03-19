@@ -54,7 +54,7 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public static function withRole($role)
+    public static function getUsersByRoleSlug($role)
     {
         $findedRole = Role::where('slug', $role)->first();
         return $findedRole->users;

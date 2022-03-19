@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $adminRoleId = Role::roleIdFor('admin')->id;
+        $adminRoleId = Role::getRoleIdBySlug('admin')->id;
         for ($i=1; $i < 4; $i++) {
             $admin = new User();
             $admin->name = 'Admin'.$i;

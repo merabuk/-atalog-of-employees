@@ -21,8 +21,15 @@ class EmployeeCreateController extends Controller
         if ($request->has('head')) {
             $query = $request->head;
         }
-        if($query == ''){
+        if ($request->has('position_id')) {
+            $positionId = $request->position_id;
+        }else{
+            $positionId = Position::getPositionIdByName('Backend developer');
+        }
+        if($query != '' &&  is_numeric($positionId)){
             $employees = User::employees()
+                ->where('name', 'like', '%' .$query . '%')
+                ->where('position_id', '>=', $positionId)
                 ->orderby('name','asc')
                 ->select('id','name')
                 ->limit(5)
@@ -31,7 +38,6 @@ class EmployeeCreateController extends Controller
             $employees = User::employees()
                 ->orderby('name','asc')
                 ->select('id','name')
-                ->where('name', 'like', '%' .$query . '%')
                 ->limit(5)
                 ->get();
         }

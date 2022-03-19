@@ -23,7 +23,7 @@ class PositionSeeder extends Seeder
             'Leading specialist of Control Department'
         ];
         foreach ($positions as $name) {
-            $adminId = User::withRole('admin')->random()->id;
+            $adminId = User::getUsersByRoleSlug('admin')->random()->id;
             $position = new Position();
             $position->name = $name;
             $position->admin_created_id = $adminId;
