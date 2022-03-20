@@ -108,6 +108,11 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 
+    <script>
+        jQuery(function ($) {
+            lozad('img[data-srcset]').observe();
+        });
+    </script>
 </body>
 
 </html>

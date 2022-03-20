@@ -17,4 +17,7 @@
 // Bootstrap
 // Already imported by AdminLTE
 //@import '~bootstrap/scss/bootstrap';
+//jQuery UI
 @import '~jquery-ui/themes/base/all.css';
+//add custom css
+@import '../css/app.css';

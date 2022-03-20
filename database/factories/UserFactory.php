@@ -48,8 +48,7 @@ class UserFactory extends Factory
 
     public function configure()
     {
-        $storagePath = public_path('storage/');
-        return $this->afterCreating(function (User $user) use ($storagePath) {
+        return $this->afterCreating(function (User $user) {
             $headId = User::getUsersByRoleSlug('employee')
                 ->where('position_id', '>=', $user->position_id)
                 ->whereNotIn('id', $user->id)->random()->id;
@@ -58,8 +57,8 @@ class UserFactory extends Factory
 
             $number = $this->faker->numberBetween(1, 6);
             $imageName = Str::random(40);
-            $imagePath = 'images/'.$imageName.'.jpg';
-            $fullPath = $storagePath.$imagePath;
+            $imagePath = 'storage/images/'.$imageName.'.jpg';
+            $fullPath = public_path($imagePath);
             Image::make(public_path('images/avatar'.$number.'.jpg'))
                     ->fit(300)
                     ->save($fullPath, 80);

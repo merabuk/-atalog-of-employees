@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         // dd(public_path('storage/'));
-        $avatar = Image::make('https://klike.net/uploads/posts/2019-03/1551511816_38.jpg')->fit(300);
+        $avatar = Image::make(public_path('images/avatar.jpg'))->fit(300);//->save(public_path('storage/images/avatar.jpg'));
         // sdd($avatar);
         return $avatar->response('jpg');
         // return view('home', compact('avatar'));

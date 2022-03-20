@@ -21,7 +21,6 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $adminRoleId = Role::getRoleIdBySlug('admin')->id;
-        $storagePath = public_path('storage/');
         for ($i=1; $i < 4; $i++) {
             $admin = new User();
             $admin->name = 'Admin'.$i;
@@ -39,8 +38,8 @@ class AdminSeeder extends Seeder
             $admin->role_id = $adminRoleId;
             $admin->save();
             $imageName = Str::random(40);
-            $imagePath = 'images/'.$imageName.'.jpg';
-            $fullPath = $storagePath.$imagePath;
+            $imagePath = 'storage/images/'.$imageName.'.jpg';
+            $fullPath = public_path($imagePath);
             Image::make(public_path('images/cosmocat.jpg'))
                     ->fit(300)
                     ->save($fullPath, 80);

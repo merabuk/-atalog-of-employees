@@ -1,11 +1,12 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/images/avatar1.jpg": "/images/avatar1.jpg",
-    "/images/avatar2.jpg": "/images/avatar2.jpg",
-    "/images/avatar3.jpg": "/images/avatar3.jpg",
-    "/images/avatar4.jpg": "/images/avatar4.jpg",
-    "/images/avatar5.jpg": "/images/avatar5.jpg",
-    "/images/avatar6.jpg": "/images/avatar6.jpg",
-    "/images/cosmocat.jpg": "/images/cosmocat.jpg"
+    "/js/app.js": "/js/app.js?id=1fea72595549463f404e0aa6915cf001",
+    "/css/app.css": "/css/app.css?id=68070554baf70a2b3a49fa2798b00f72",
+    "/images/avatar.jpg": "/images/avatar.jpg?id=83bac5198848d9904d136db224ec5abd",
+    "/images/avatar1.jpg": "/images/avatar1.jpg?id=4c3ee1b05ea8b8a2e7fad1bf19eb7be8",
+    "/images/avatar2.jpg": "/images/avatar2.jpg?id=a6640c3b66a6c37be26a3f5b05a861ed",
+    "/images/avatar3.jpg": "/images/avatar3.jpg?id=ba745626db27fe1262ea6b6a26b39c51",
+    "/images/avatar4.jpg": "/images/avatar4.jpg?id=f4b9e701831e2a5460803486f2e67175",
+    "/images/avatar5.jpg": "/images/avatar5.jpg?id=cbeeaa1dc25583c005659d797ede1ed6",
+    "/images/avatar6.jpg": "/images/avatar6.jpg?id=548c1a6129a7a828bdadfd78e05446e2",
+    "/images/cosmocat.jpg": "/images/cosmocat.jpg?id=dbb56e865a0cdf415dd09f245af5a6c1"
 }

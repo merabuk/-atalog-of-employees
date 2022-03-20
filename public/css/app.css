@@ -62501,4 +62501,9 @@ a.ui-button:active,
  * http://api.jqueryui.com/category/theming/
  */
 
+img.circle{
+    border-radius: 50%;
+    max-height: 30px;
+}
+
 

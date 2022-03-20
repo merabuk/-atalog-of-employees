@@ -17,7 +17,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $users = User::employees()->with('position')->get();
+        $users = User::employees()->with(['position', 'image'])->get();
         return view('employees.index', compact('users'));
     }
 

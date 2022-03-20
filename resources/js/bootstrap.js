@@ -12,6 +12,8 @@ try {
     require('bootstrap');
     require('./plugins/jquery.maskedinput');
 
+    window.lozad = require('lozad');
+
 } catch (error) {
     console.log(error);
 }

@@ -249,13 +249,13 @@ return [
         [
             'text'      => 'Employees',
             'url'       => 'employees',
-            'icon'      => 'far fa-fw fa-file',
+            'icon'      => 'fa-solid fa-user-group',
             'active'    => ['employees*'],
         ],
         [
-            'text'        => 'Employees',
+            'text'        => 'Positions',
             'url'         => 'employees',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fa-solid fa-book',
         ],
         // [
         //     'text'        => 'pages',
