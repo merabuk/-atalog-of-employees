@@ -57,8 +57,8 @@ class UserFactory extends Factory
 
             $number = $this->faker->numberBetween(1, 6);
             $imageName = Str::random(40);
-            $imagePath = 'storage/images/'.$imageName.'.jpg';
-            $fullPath = public_path($imagePath);
+            $imagePath = 'images/'.$imageName.'.jpg';
+            $fullPath = public_path('storage/'.$imagePath);
             Image::make(public_path('images/avatar'.$number.'.jpg'))
                     ->fit(300)
                     ->save($fullPath, 80);

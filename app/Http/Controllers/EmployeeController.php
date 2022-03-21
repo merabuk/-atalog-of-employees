@@ -8,8 +8,10 @@ use App\Models\ImageModel;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Image;
 
 class EmployeeController extends Controller
@@ -45,7 +47,6 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        // dd($request->all());
         $validatedRequest = $request->validated();
         $validatedRequest['password'] = Hash::make('password');
         $validatedRequest['admin_created_id'] = auth()->user()->id;
@@ -56,8 +57,8 @@ class EmployeeController extends Controller
         $user = User::create($validatedRequest);
 
         $imageName = Str::random(40);
-        $image['path'] = 'storage/images/'.$imageName.'.jpg';
-        $fullPath = public_path($image['path']);
+        $image['path'] = 'images/'.$imageName.'.jpg';
+        $fullPath = public_path('storage/'.$image['path']);
         $image['user_id'] = $user->id;
         Image::make($validatedRequest['image'])->fit(300)->save($fullPath, 80);
         $user = ImageModel::create($image);
@@ -84,9 +85,8 @@ class EmployeeController extends Controller
      */
     public function edit(User $employee)
     {
-        $user = $employee;
         $positions = Position::get();
-        return view('employees.edit', compact('user', 'positions'));
+        return view('employees.edit', compact('employee', 'positions'));
     }
 
     /**
@@ -96,9 +96,24 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateEmployeeRequest $request, User $employee)
     {
-        dd($request);
+        $validatedRequest = $request->validated();
+        $validatedRequest['admin_created_id'] = auth()->user()->id;
+        $validatedRequest['admin_updated_id'] = auth()->user()->id;
+        $employee->update($validatedRequest);
+        if (isset($validatedRequest['image'])) {
+            $oldPath = $employee->image->path;
+            $imageName = Str::random(40);
+            $imagePath = 'images/'.$imageName.'.jpg';
+            $fullPath = public_path('storage/'.$imagePath);
+            Image::make($validatedRequest['image'])->fit(300)->save($fullPath, 80);
+            $employee->image->path = $imagePath;
+            $employee->push();
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        return redirect()->route('employees.index')->with('alert-success', 'Employee has been successfuly updated');
     }
 
     /**
@@ -107,9 +122,16 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, User $employee)
     {
-        //
+        $oldPath = $employee->image->path;
+        $employee->image()->delete();
+        $employee->delete();
+        Storage::disk('public')->delete($oldPath);
+        if ($request->ajax()) {
+            return response('deleted');
+        }
+        return redirect()->back();
     }
 
     public function getHead(Request $request)

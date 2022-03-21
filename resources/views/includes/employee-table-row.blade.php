@@ -1,6 +1,6 @@
 <tr>
-    <td><img src="{{ asset($user->image->path) }}" class="circle" alt="Avatar"
-            data-srcset="{{ asset($user->image->path) }}"
+    <td><img src="{{ asset('storage/'.$user->image->path) }}" class="circle" alt="Avatar"
+            data-srcset="{{ asset('storage/'.$user->image->path) }}"
             srcset="{{ asset('images/avatar.jpg') }}"></td>
     <td>{{ $user->name }}</td>
     <td>{{ $user->position->name }}</td>
@@ -31,8 +31,11 @@
                         Are you sure you want to remove employee {{ $user->name }}?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="{{ route('employees.destroy', $user->id) }}">Remove</a>
+                        <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form method="post" class="delete-employee" data-route="{{ route('employees.destroy', $user->id) }}">
+                            @method('delete')
+                            <button class="btn btn-danger" type="submit">Remove</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -38,8 +38,8 @@ class AdminSeeder extends Seeder
             $admin->role_id = $adminRoleId;
             $admin->save();
             $imageName = Str::random(40);
-            $imagePath = 'storage/images/'.$imageName.'.jpg';
-            $fullPath = public_path($imagePath);
+            $imagePath = 'images/'.$imageName.'.jpg';
+            $fullPath = public_path('storage/'.$imagePath);
             Image::make(public_path('images/cosmocat.jpg'))
                     ->fit(300)
                     ->save($fullPath, 80);

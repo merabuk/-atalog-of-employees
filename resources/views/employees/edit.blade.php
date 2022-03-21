@@ -19,11 +19,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <form id="create-employee" action="{{ route('employees.update', $user) }}" method="POST" enctype="multipart/form-data">
+                            <form id="create-employee" action="{{ route('employees.update', $employee) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 {{-- Photo --}}
-                                <img id="avatar" src="{{ asset($user->image->path) }}" alt="your avatar" class="object-fit-cover"/>
+                                <img id="avatar" src="{{ asset('storage/'.$employee->image->path) }}" alt="your avatar" class="object-fit-cover"/>
                                 <x-adminlte-input-file id="image" name="image" label="Upload photo" accept=".jpg, .png"
                                     placeholder="Choose a file..." legend="Browse" value="{{ old('image') }}">
                                     <x-slot name="bottomSlot">
@@ -34,7 +34,7 @@
                                 </x-adminlte-input-file>
                                 {{-- Name --}}
                                 <x-adminlte-input id="name" name="name" label="Name" placeholder="Enter name of employee"
-                                    min="2" max="256" error-key="name" value="{{ old('name', $user->name) }}">
+                                    min="2" max="256" error-key="name" value="{{ old('name', $employee->name) }}">
                                     <x-slot name="bottomSlot">
                                         @error('name')
                                             <span class="invalid-feedback">
@@ -49,7 +49,7 @@
                                 </x-adminlte-input>
                                 {{-- Phone --}}
                                 <x-adminlte-input id="phone" name="phone" label="Phone" placeholder="Enter phone of employee"
-                                    type="tel" error-key="phone" value="{{ old('phone', $user->phone) }}">
+                                    type="tel" error-key="phone" value="{{ old('phone', $employee->phone) }}">
                                     <x-slot name="bottomSlot">
                                         @error('phone')
                                             <span class="invalid-feedback">
@@ -64,7 +64,7 @@
                                 </x-adminlte-input>
                                 {{-- Email --}}
                                 <x-adminlte-input id="email" name="email" label="Email" placeholder="Enter email of employee"
-                                    error-key="email" value="{{ old('email', $user->email) }}">
+                                    error-key="email" value="{{ old('email', $employee->email) }}">
                                     <x-slot name="bottomSlot">
                                         @error('email')
                                             <span class="invalid-feedback">
@@ -83,7 +83,7 @@
                                     </x-slot>
                                     <option></option>
                                     @forelse ($positions as $position)
-                                        <option @if (old('position_id', $user->position_id)==$position->id) selected @endif
+                                        <option @if (old('position_id', $employee->position_id)==$position->id) selected @endif
                                             value="{{ $position->id }}" >{{ $position->name }}</option>
                                     @empty
                                         <option disabled>No positions available</option>
@@ -91,7 +91,7 @@
                                 </x-adminlte-select2>
                                 {{-- Salary --}}
                                 <x-adminlte-input id="salary" name="salary" label="Salary, $" placeholder="Enter salary of employee"
-                                    min="0" max="500" error-key="salary" value="{{ old('salary', $user->salary) }}" type="number" step="0.001">
+                                    min="0" max="500" error-key="salary" value="{{ old('salary', $employee->salary) }}" type="number" step="0.001">
                                     <x-slot name="bottomSlot">
                                         @error('salary')
                                             <span class="invalid-feedback">
@@ -102,7 +102,7 @@
                                 </x-adminlte-input>
                                 {{-- Head --}}
                                 <x-adminlte-input id="head" name="head" label="Head" placeholder="Enter head name of employee"
-                                    error-key="head" value="{{ old('head', $user->head->name) }}">
+                                    error-key="head" value="{{ old('head', $employee->head->name) }}">
                                     <x-slot name="bottomSlot">
                                         @error('head')
                                             <span class="invalid-feedback">
@@ -111,7 +111,7 @@
                                         @enderror
                                     </x-slot>
                                 </x-adminlte-input>
-                                <input type="hidden" id='head_id' name="head_id" value="{{ old('head_id', $user->head_id) }}">
+                                <input type="hidden" id='head_id' name="head_id" value="{{ old('head_id', $employee->head_id) }}">
                                 {{-- Date of employment --}}
                                 @php
                                 $dateOfEmployeeConfig = [
@@ -124,7 +124,7 @@
                                 @endphp
                                 <x-adminlte-input-date name="date_of_employment" label="Date of employment"
                                     :config="$dateOfEmployeeConfig" placeholder="Choose a day..."
-                                    value="{{ old('date_of_employment', \Carbon\Carbon::parse($user->date_of_employment)->format('d.m.Y')) }}">
+                                    value="{{ old('date_of_employment', \Carbon\Carbon::parse($employee->date_of_employment)->format('d.m.Y')) }}">
                                     <x-slot name="appendSlot">
                                         <div class="input-group-text bg-dark">
                                             <i class="fas fa-calendar-day"></i>
@@ -141,18 +141,18 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-6">
-                                            <span class="text-bold">Created at: </span>{{ $user->created_at->format('d.m.Y') }}
+                                            <span class="text-bold">Created at: </span>{{ $employee->created_at->format('d.m.Y') }}
                                         </div>
                                         <div class="col-6">
-                                            <span class="text-bold">Admin created ID: </span>{{ $user->admin_created_id }}
+                                            <span class="text-bold">Admin created ID: </span>{{ $employee->admin_created_id }}
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            <span class="text-bold">Updated at: </span>{{ $user->updated_at->format('d.m.Y') }}
+                                            <span class="text-bold">Updated at: </span>{{ $employee->updated_at->format('d.m.Y') }}
                                         </div>
                                         <div class="col-6">
-                                            <span class="text-bold">Admin updated ID: </span>{{ $user->admin_updated_id }}
+                                            <span class="text-bold">Admin updated ID: </span>{{ $employee->admin_updated_id }}
                                         </div>
                                     </div>
                                 </div>

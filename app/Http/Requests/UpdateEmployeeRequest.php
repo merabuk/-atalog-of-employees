@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image|mimes:jpg,png|max:5120|dimensions:min_width=300,min_height=300',
+            'image' => 'sometimes|image|mimes:jpg,png|max:5120|dimensions:min_width=300,min_height=300',
             'name' => 'required|min:2|max:256',
             'phone' => ['required', 'regex:/\+380[0-9]{9}/'],
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email,'.$this->employee->id,
             'position_id' => 'required',
             'salary' => 'required|min:0|max:500',
             'head' => 'required',

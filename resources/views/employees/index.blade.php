@@ -69,6 +69,26 @@
                     lozad('img[data-srcset]').observe();
                 });
             }
+
+            $('.delete-employee').on('submit', function(e) {
+              e.preventDefault();
+
+              $.ajax({
+                  type: 'post',
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  url: $(this).data('route'),
+                  data: {
+                    '_method': 'delete'
+                  },
+                  success: function (response, textStatus, xhr) {
+                    if (response == 'deleted') {
+                        document.location.reload();
+                    };
+                  }
+              });
+            });
         });
     </script>
 @endpush
