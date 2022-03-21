@@ -28,7 +28,7 @@ class UserFactory extends Factory
         $email = $slug.'@gmail.com';
         $positionId = Position::get()->random()->id;
         $adminId = User::getUsersByRoleSlug('admin')->random()->id;
-        $employeeRoleId = Role::getRoleIdBySlug('employee')->id;
+        $employeeRoleId = Role::getRoleBySlug('employee')->id;
         return [
             'name' => $fullName,
             'position_id' => $positionId,

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeCreateController;
+use App\Http\Controllers\EmployeeEditController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,5 @@ Auth::routes();
 
 Route::get('/', [AdminController::class, 'index'])->name('admin');
 Route::get('/home', [HomeController::class, 'index'])->name('avatar');
-Route::resource('/employees', EmployeeController::class)->except(['create', 'show']);
-Route::get('/employees/create', [EmployeeCreateController::class, 'create'])->name('employees.create');
-Route::post('/employees/create/get-head', [EmployeeCreateController::class, 'getHead'])->name('employees.create.get-head');
+Route::resource('/employees', EmployeeController::class)->except(['show']);
+Route::post('/employees/get-head', [EmployeeController::class, 'getHead'])->name('employees.get-head');

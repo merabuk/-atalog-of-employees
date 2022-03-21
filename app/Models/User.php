@@ -24,6 +24,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'position_id',
+        'salary',
+        'head_id',
+        'date_of_employment',
+        'admin_created_id',
+        'admin_updated_id',
+        'role_id',
     ];
 
     /**
@@ -60,6 +68,11 @@ class User extends Authenticatable
         return $this->hasOne(ImageModel::class);
     }
 
+    public function head()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function getUsersByRoleSlug($role)
     {
         $findedRole = Role::where('slug', $role)->first();
@@ -68,6 +81,7 @@ class User extends Authenticatable
 
     public function scopeEmployees($query)
     {
-        return $query->where('role_id', 2);
+        $employeeRoleId = Role::getRoleBySlug('employee')->id;
+        return $query->where('role_id', $employeeRoleId);
     }
 }

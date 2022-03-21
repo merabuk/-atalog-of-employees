@@ -49,11 +49,11 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('#employees').on('page.dt', function() {
-                $(document).ready(function() {
-                    lozad('img[data-srcset]').observe();
-                });
-            }).DataTable({
+            $('#employees')
+            .on('order.dt',  function () { eventFired(); })
+            .on('search.dt', function () { eventFired(); })
+            .on('page.dt',   function () { eventFired(); })
+            .DataTable({
                 stateSave: true,
                 // language: {
                 //     url: '{{ asset("/js/backend/plugins/datatables/lang.json") }}'
@@ -63,6 +63,12 @@
                     'aTargets': [-1] //Отключение сортировки по последнему полю (-1 - первое справа)
                 }],
             });
+
+            function eventFired() {
+                $(document).ready(function() {
+                    lozad('img[data-srcset]').observe();
+                });
+            }
         });
     </script>
 @endpush

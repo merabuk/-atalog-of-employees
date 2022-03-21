@@ -109,7 +109,7 @@
     @yield('adminlte_js')
 
     <script>
-        jQuery(function ($) {
+        $(document).ready(function() {
             lozad('img[data-srcset]').observe();
         });
     </script>

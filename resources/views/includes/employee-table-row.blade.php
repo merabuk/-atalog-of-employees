@@ -4,7 +4,7 @@
             srcset="{{ asset('images/avatar.jpg') }}"></td>
     <td>{{ $user->name }}</td>
     <td>{{ $user->position->name }}</td>
-    <td>{{ $user->date_of_employment }}</td>
+    <td>{{ \Carbon\Carbon::parse($user->date_of_employment)->format('d.m.Y') }}</td>
     <td>{{ $user->phone }}</td>
     <td>{{ $user->email }}</td>
     <td>{{ $user->salary }}</td>
@@ -37,8 +37,8 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+        {{-- <button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
             <i class="fa fa-lg fa-fw fa-eye"></i>
-        </button>
+        </button> --}}
     </td>
 </tr>

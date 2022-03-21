@@ -38,4 +38,19 @@ class StoreEmployeeRequest extends FormRequest
             // 'confirm' => 'required_with:password|same:password',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'image' => 'Photo',
+            'name' => 'Name',
+            'phone' => 'Phone',
+            'email' => 'Email',
+            'position_id' => 'Position',
+            'salary' => 'Salary, $',
+            'head' => 'Head',
+            'head_id' => 'Head Id',
+            'date_of_employment' => 'Date of employment',
+        ];
+    }
 }

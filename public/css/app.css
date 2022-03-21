@@ -60957,7 +60957,6 @@ a.text-muted:hover {
 .dark-mode .border-dark {
   border-color: #4b545c !important;
 }
-/*# sourceMappingURL=adminlte.css.map */
 /*!
  * jQuery UI CSS Framework 1.13.1
  * http://jqueryui.com
@@ -62501,9 +62500,15 @@ a.ui-button:active,
  * http://api.jqueryui.com/category/theming/
  */
 
-img.circle{
+img.circle {
     border-radius: 50%;
     max-height: 30px;
+}
+img.object-fit-cover {
+    width: 300px;
+    height: 300px;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 
 
