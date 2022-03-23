@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Employees')
+@section('title', 'Positions')
 
 @section('content_header')
     @include('includes.flash')
     <div class="d-flex justify-content-between">
-        <h1 class="mr-3 text-dark">Employees</h1>
-        <a class="btn bg-success" href="{{ route('employees.create') }}"><i class="fas fa-plus-circle"></i> Create an employee</a>
+        <h1 class="mr-3 text-dark">Positions</h1>
+        <a class="btn bg-success" href="{{ route('positions.create') }}"><i class="fas fa-plus-circle"></i> Create position</a>
     </div>
 @stop
 
@@ -15,25 +15,20 @@
         <div class="col-12">
             <x-adminlte-card>
                 <div class="table-responsive">
-                    <table id="employees" class="table table-sm table-striped table-bordered w-100">
+                    <table id="positions" class="table table-sm table-striped table-bordered w-100">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Photo</th>
                                 <th>Name</th>
-                                <th>Position</th>
-                                <th>Date of employment</th>
-                                <th>Phone number</th>
-                                <th>Email</th>
-                                <th>Salary</th>
+                                <th>Last update</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($users as $user)
-                                @include('includes.employee-table-row', ['user' => $user])
+                            @forelse ($positions as $position)
+                                @include('includes.position-table-row', ['position' => $position])
                             @empty
                                 <tr>
-                                    <td colspan="8">No data available in table</td>
+                                    <td colspan="3">No data available in table</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -50,11 +45,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('#employees')
-            .on('order.dt',  function () { eventFired(); })
-            .on('search.dt', function () { eventFired(); })
-            .on('page.dt',   function () { eventFired(); })
-            .DataTable({
+            $('#positions').DataTable({
                 stateSave: true,
                 // language: {
                 //     url: '{{ asset("/js/backend/plugins/datatables/lang.json") }}'
@@ -65,13 +56,7 @@
                 }],
             });
 
-            function eventFired() {
-                $(document).ready(function() {
-                    lozad('img[data-srcset]').observe();
-                });
-            }
-
-            $('.delete-employee').on('submit', function(e) {
+            $('.delete-position').on('submit', function(e) {
               e.preventDefault();
 
               $.ajax({

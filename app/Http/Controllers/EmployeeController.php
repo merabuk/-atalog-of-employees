@@ -128,6 +128,7 @@ class EmployeeController extends Controller
         $employee->image()->delete();
         $employee->delete();
         Storage::disk('public')->delete($oldPath);
+        $request->session()->put('alert-info', 'Employee has been deleted');
         if ($request->ajax()) {
             return response('deleted');
         }

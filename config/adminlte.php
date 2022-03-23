@@ -254,8 +254,9 @@ return [
         ],
         [
             'text'        => 'Positions',
-            'url'         => 'employees',
+            'url'         => 'positions',
             'icon'        => 'fa-solid fa-book',
+            'active'    => ['positions*'],
         ],
         // [
         //     'text'        => 'pages',

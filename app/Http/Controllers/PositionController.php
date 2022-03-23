@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Position;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePositionRequest;
+use App\Http\Requests\UpdatePositionRequest;
 
 class PositionController extends Controller
 {
@@ -14,7 +16,8 @@ class PositionController extends Controller
      */
     public function index()
     {
-        //
+        $positions = Position::get();
+        return view('positions.index', compact('positions'));
     }
 
     /**
@@ -24,7 +27,7 @@ class PositionController extends Controller
      */
     public function create()
     {
-        //
+        return view('positions.create');
     }
 
     /**
@@ -33,9 +36,13 @@ class PositionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePositionRequest $request)
     {
-        //
+        $validatedRequest = $request->validated();
+        $validatedRequest['admin_created_id'] = auth()->user()->id;
+        $validatedRequest['admin_updated_id'] = auth()->user()->id;
+        Position::create($validatedRequest);
+        return redirect()->route('positions.index')->with('alert-success', 'Position has been successfuly created');
     }
 
     /**
@@ -57,7 +64,7 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
-        //
+        return view('positions.edit', compact('position'));
     }
 
     /**
@@ -67,9 +74,12 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position)
     {
-        //
+        $validatedRequest = $request->validated();
+        $validatedRequest['admin_updated_id'] = auth()->user()->id;
+        $position->update($validatedRequest);
+        return redirect()->route('positions.index')->with('alert-success', 'Position has been successfuly updated');
     }
 
     /**
@@ -78,8 +88,14 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Position $position)
+    public function destroy(Request $request, Position $position)
     {
-        //
+
+        $position->delete();
+        $request->session()->put('alert-info', 'Position has been deleted');
+        if ($request->ajax()) {
+            return response('deleted');
+        }
+        return redirect()->back();
     }
 }

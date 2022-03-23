@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployeeCreateController;
-use App\Http\Controllers\EmployeeEditController;
+use App\Http\Controllers\PositionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +28,4 @@ Route::get('/', [AdminController::class, 'index'])->name('admin');
 Route::get('/home', [HomeController::class, 'index'])->name('avatar');
 Route::resource('/employees', EmployeeController::class)->except(['show']);
 Route::post('/employees/get-head', [EmployeeController::class, 'getHead'])->name('employees.get-head');
+Route::resource('/positions', PositionController::class)->except(['show']);

@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <form id="create-employee" action="{{ route('employees.update', $employee) }}" method="POST" enctype="multipart/form-data">
+                            <form id="edit-employee" action="{{ route('employees.update', $employee) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 {{-- Photo --}}
@@ -146,8 +146,6 @@
                                         <div class="col-6">
                                             <span class="text-bold">Admin created ID: </span>{{ $employee->admin_created_id }}
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-6">
                                             <span class="text-bold">Updated at: </span>{{ $employee->updated_at->format('d.m.Y') }}
                                         </div>
@@ -186,7 +184,7 @@
             $('#phone').mask('+380 (99) 999 99 99', {placeholder:" "}, {autoclear: false});
         });
 
-        $("#create-employee").submit(function(event) {
+        $("#edit-employee").submit(function(event) {
             event.preventDefault();
             $("#phone").val($("#phone").val().replace(/\(|\)|\s/g, ''));
             this.submit();
