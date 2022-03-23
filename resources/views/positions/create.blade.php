@@ -48,6 +48,7 @@
 <script>
     $(document).ready(function($) {
         var name = document.getElementById('name');
+        document.getElementById('simbol-count').innerHTML = name.value.length+'/256';
         name.oninput = function() {
             document.getElementById('simbol-count').innerHTML = name.value.length+'/256';
         };
