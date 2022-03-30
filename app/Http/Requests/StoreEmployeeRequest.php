@@ -30,8 +30,8 @@ class StoreEmployeeRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'position_id' => 'required',
             'salary' => 'required|min:0|max:500',
-            'head' => 'required',
-            'head_id' => 'required',
+            'head' => 'sometimes',
+            'head_id' => 'required_with:head',
             'date_of_employment' => 'required|date',
         ];
     }

@@ -180,7 +180,7 @@
         $("#head").autocomplete({
             source: function( request, response ) {
                 var selectedPosition = $('#select2-position_id-container').html();
-                var positionId = $('#position_id option:contains('+selectedPosition+')').val();
+                // var positionId = $('#position_id option:contains('+selectedPosition+')').val();
                 // Fetch data
                 $.ajax({
                     url: routeGetHead,
@@ -189,7 +189,7 @@
                     data: {
                         _token: CSRF_TOKEN,
                         head: request.term,
-                        position_id: positionId,
+                        // position_id: positionId,
                     },
                     success: function(data) {
                         response(data);

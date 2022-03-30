@@ -21,25 +21,23 @@ class UserFactory extends Factory
     public function definition()
     {
         $gender = $this->faker->randomElement(['male', 'female']);
-        $firstName = $this->faker->firstName($gender);
-        $lastName = $this->faker->lastName($gender);
-        $fullName = $firstName.' '.$lastName;
+        $fullName = $this->faker->name($gender);
         $slug = Str::slug($fullName);
-        $email = $slug.'@gmail.com';
         $positionId = Position::get()->random()->id;
         $adminId = User::getUsersByRoleSlug('admin')->random()->id;
         $employeeRoleId = Role::getRoleBySlug('employee')->id;
+        $rndstr = Str::random(5);
+        $email = $slug.$rndstr.'@gmail.com';
         return [
             'name' => $fullName,
             'position_id' => $positionId,
             'date_of_employment' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
-            'phone' => $this->faker->numerify('+380#########'),
+            'phone' => $this->faker->numerify('+380#########'),//e164PhoneNumber()
             'email' => $email,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'salary' => $this->faker->randomFloat(3, 0, 500),
-            'head_id' => null,
             'admin_created_id' => $adminId,
             'admin_updated_id' => $adminId,
             'role_id' => $employeeRoleId,
@@ -48,13 +46,7 @@ class UserFactory extends Factory
 
     public function configure()
     {
-        return $this->afterCreating(function (User $user) {
-            $headId = User::getUsersByRoleSlug('employee')
-                ->where('position_id', '>=', $user->position_id)
-                ->whereNotIn('id', $user->id)->random()->id;
-            $user->head_id = $headId;
-            $user->save();
-
+        return $this->afterCreating(function (User $user){
             $number = $this->faker->numberBetween(1, 6);
             $imageName = Str::random(40);
             $imagePath = 'images/'.$imageName.'.jpg';

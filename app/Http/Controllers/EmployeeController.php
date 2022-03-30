@@ -12,10 +12,23 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Image;
 
 class EmployeeController extends Controller
 {
+    private $liveInCache = 900;
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->getEmployees();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +36,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $users = User::employees()->with(['position', 'image'])->get();
+        $users = $this->getEmployees();
         return view('employees.index', compact('users'));
     }
 
@@ -34,9 +47,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $users = User::employees()->get();
+        // return $employees = User::employees()->withDepth()->having('depth', '<=', 4)->limit(10)->get();
         $positions = Position::all();
-        return view('employees.create', compact('users', 'positions'));
+        return view('employees.create', compact('positions'));
     }
 
     /**
@@ -56,12 +69,19 @@ class EmployeeController extends Controller
 
         $user = User::create($validatedRequest);
 
+        if(isset($validatedRequest['head']) && isset($validatedRequest['head_id'])) {
+            $head = User::findOrFail($validatedRequest['head_id']);
+            $user->appendToNode($head)->save();
+        }
+
         $imageName = Str::random(40);
         $image['path'] = 'images/'.$imageName.'.jpg';
         $fullPath = public_path('storage/'.$image['path']);
         $image['user_id'] = $user->id;
         Image::make($validatedRequest['image'])->fit(300)->save($fullPath, 80);
         $user = ImageModel::create($image);
+
+        $this->setEmployees();
 
         return redirect()->route('employees.index')->with('alert-success', 'Employee has been successfuly created');
     }
@@ -141,23 +161,23 @@ class EmployeeController extends Controller
         if ($request->has('head')) {
             $query = $request->head;
         }
-        if ($request->has('position_id')) {
-            $positionId = $request->position_id;
-        }else{
-            $positionId = Position::getPositionIdByName('Backend developer');
-        }
-        if($query != '' &&  is_numeric($positionId)){
+        // if ($request->has('position_id')) {
+        //     $positionId = $request->position_id;
+        // }else{
+        //     $positionId = Position::getPositionIdByName('Backend developer');
+        // }
+        if($query != ''){///} &&  is_numeric($positionId)){
             $employees = User::employees()
+                ->withDepth()->having('depth', '<=', 4)
                 ->where('name', 'like', '%' .$query . '%')
-                ->where('position_id', '>=', $positionId)
+                // ->where('position_id', '>=', $positionId)
                 ->orderby('name','asc')
-                ->select('id','name')
                 ->limit(5)
                 ->get();
         }else{
             $employees = User::employees()
+                ->withDepth()->having('depth', '<=', 4)
                 ->orderby('name','asc')
-                ->select('id','name')
                 ->limit(5)
                 ->get();
         }
@@ -167,5 +187,24 @@ class EmployeeController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function getEmployees()
+    {
+        if(Cache::has('employees')) {
+            $users = Cache::get('employees');
+        } else {
+            $this->setEmployees();
+        }
+        return $users;
+    }
+
+    public function setEmployees()
+    {
+        if(Cache::has('products')) {
+            Cache::forget('products');
+        }
+        $users = User::employees()->withDepth()->with(['position', 'image'])->get();
+        Cache::put('employees', $users, $this->liveInCache);
     }
 }

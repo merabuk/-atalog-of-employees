@@ -18,6 +18,15 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(100)->create();
+        // $this->command->comment('Seeding 100 an employee... Please wait...');
+        User::factory()->has(
+            User::factory()->count(10)->has(
+                User::factory()->count(10)->has(
+                    User::factory()->count(10)->has(
+                        User::factory()->count(10)
+                    , 'children')
+                , 'children')
+            , 'children')
+        , 'children')->create();
     }
 }

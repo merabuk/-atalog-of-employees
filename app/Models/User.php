@@ -10,10 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Position;
 use App\Models\Role;
 use App\Models\ImageModel;
+use Kalnoy\Nestedset\NodeTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, NodeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +28,6 @@ class User extends Authenticatable
         'phone',
         'position_id',
         'salary',
-        'head_id',
         'date_of_employment',
         'admin_created_id',
         'admin_updated_id',
@@ -66,16 +66,6 @@ class User extends Authenticatable
     public function image()
     {
         return $this->hasOne(ImageModel::class);
-    }
-
-    public function head()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function subordinates()
-    {
-        return $this->hasMany(User::class, 'head_id');
     }
 
     public static function getUsersByRoleSlug($role)

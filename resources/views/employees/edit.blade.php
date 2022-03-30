@@ -102,7 +102,7 @@
                                 </x-adminlte-input>
                                 {{-- Head --}}
                                 <x-adminlte-input id="head" name="head" label="Head" placeholder="Enter head name of employee"
-                                    error-key="head" value="{{ old('head', $employee->head->name) }}">
+                                    error-key="head" value="{{ old('head', $employee->parent->name ?? '') }}">
                                     <x-slot name="bottomSlot">
                                         @error('head')
                                             <span class="invalid-feedback">
@@ -111,7 +111,7 @@
                                         @enderror
                                     </x-slot>
                                 </x-adminlte-input>
-                                <input type="hidden" id='head_id' name="head_id" value="{{ old('head_id', $employee->head_id) }}">
+                                <input type="hidden" id='head_id' name="head_id" value="{{ old('head_id', $employee->parent_id) }}">
                                 {{-- Date of employment --}}
                                 @php
                                 $dateOfEmployeeConfig = [
@@ -196,7 +196,7 @@
         $("#head").autocomplete({
             source: function( request, response ) {
                 var selectedPosition = $('#select2-position_id-container').html();
-                var positionId = $('#position_id option:contains('+selectedPosition+')').val();
+                // var positionId = $('#position_id option:contains('+selectedPosition+')').val();
                 // Fetch data
                 $.ajax({
                     url: routeGetHead,
@@ -205,7 +205,7 @@
                     data: {
                         _token: CSRF_TOKEN,
                         head: request.term,
-                        position_id: positionId,
+                        // position_id: positionId,
                     },
                     success: function(data) {
                         response(data);

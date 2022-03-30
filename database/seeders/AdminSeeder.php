@@ -32,11 +32,11 @@ class AdminSeeder extends Seeder
             $admin->password = Hash::make('password');
             $admin->remember_token = Str::random(10);
             $admin->salary = 500;
-            $admin->head_id = null;
+            // $admin->head_id = null;
             $admin->admin_created_id = $i;
             $admin->admin_updated_id = $i;
             $admin->role_id = $adminRoleId;
-            $admin->save();
+            $admin->makeRoot()->save();
             $imageName = Str::random(40);
             $imagePath = 'images/'.$imageName.'.jpg';
             $fullPath = public_path('storage/'.$imagePath);

@@ -23,13 +23,12 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->float('salary', 6, 3);
-            $table->unsignedBigInteger('head_id')->nullable();
-            $table->foreign('head_id')->references('id')->on('users');//
             $table->timestamps();
             $table->unsignedBigInteger('admin_created_id');
             $table->foreign('admin_created_id')->references('id')->on('users');
             $table->unsignedBigInteger('admin_updated_id');
             $table->foreign('admin_updated_id')->references('id')->on('users');
+            $table->nestedSet();
         });
     }
 
@@ -40,6 +39,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropNestedSet();
+        });
         Schema::dropIfExists('users');
     }
 }
